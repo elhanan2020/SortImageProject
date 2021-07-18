@@ -1,7 +1,10 @@
 package main.controllers;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import main.beans.MySession;
+import main.img.ComparingImages;
 import main.repo.UserRepository;
 import main.repo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -21,6 +28,10 @@ public class UserController {
     /* we inject a property from the application.properties  file */
     @Value( "${demo.coursename}" )
     private String someProperty;
+
+    @Resource(name = "sessionBean")
+    public MySession sessionObj;
+
 
     /* we need it so  inject the User repo bean */
     @Autowired
@@ -32,9 +43,10 @@ public class UserController {
 
     @GetMapping("/")
     public String main(User user ) {
-
+        sessionObj.setUserName("elhanan");
         return "uploadFile";
     }
+
 
     @PostMapping("/signUp")
     public String showSignUpForm(@Valid User user, BindingResult result, Model model) {
@@ -46,31 +58,24 @@ public class UserController {
     }
     @PostMapping ("/logIn")
     public String logIn(@RequestParam String userName, @RequestParam String password, Model model) {
-
     if (!repository.findByUserName(userName).getPassword().equals(password)) {
             model.addAttribute("error",true);
             return "LoginPage";
         }
-
-        return "MainPage";
+        sessionObj.setConnected(true);
+        sessionObj.setUserName(userName);
+        return "uploadFile";
     }
 
-    @PostMapping("/adduser")
-    public String addUser(@Valid User user, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "add-user";
-        }
-        getRepo().save(user);
-        model.addAttribute("users", getRepo().findAll());
-        return "index";
-    }
 
-    @GetMapping("/edit/{id}")
-    public String showUpdateForm(@PathVariable("id") long id, Model model) {
 
-        User user = getRepo().findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        model.addAttribute("user", user);
-        return "update-user";
+    @GetMapping("/sortImage")
+    public String sortImage(Model model ) throws Exception {
+       ComparingImages sortAction = new ComparingImages(sessionObj.getUserName(),sessionObj.getArrImg());
+       sortAction.run();
+      model.addAttribute("user", sessionObj.getUserName());
+      sessionObj.setArrImg(sortAction.getArrImg());
+      return "uploadFile";
     }
 
     @PostMapping("/update/{id}")
@@ -85,13 +90,16 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") long id, Model model) {
-
-        User user = getRepo().findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        getRepo().delete(user);
-        model.addAttribute("users", getRepo().findAll());
-        return "index";
+    @GetMapping("/getListImg")
+    public @ResponseBody List<HashMap<Integer, Integer>> getListImg( ) {
+        ArrayList<ArrayList<BufferedImage>> temp = sessionObj.getArrImg();
+        List<HashMap<Integer, Integer>> myList = new ArrayList<>();
+        for (int i = 0 ; i< temp.size() ; i++) {
+            HashMap<Integer, Integer> map = new HashMap<>();
+            map.put(i,temp.get(i).size());
+            myList.add(map);
+        }
+        return myList;
     }
 
     @GetMapping(value="/json")

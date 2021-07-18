@@ -1,5 +1,4 @@
 package main;
-import main.beans.Messages;
 import main.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

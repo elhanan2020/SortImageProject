@@ -1,6 +1,5 @@
 package main;
 
-import main.beans.Messages;
 import main.filters.LoggingInterceptor;
 import org.springframework.context.annotation.Configuration;
 
