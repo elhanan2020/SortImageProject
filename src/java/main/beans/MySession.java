@@ -6,6 +6,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * in this class i  initialize a claas label that store any field that i want to store in session,context...
@@ -15,13 +16,23 @@ public class MySession  implements Serializable {
     private boolean connected ;
     private String userName="";
 
+    public void setArrTemp(ArrayList<ArrayList<String>> arrTemp) {
+        this.arrTemp = arrTemp;
+    }
+    public ArrayList<ArrayList<String>> getArrTemp() {
+        return arrTemp;
+    }
 
-    ArrayList<ArrayList<BufferedImage>> arrImg ;
+    private ArrayList<ArrayList<String>> arrTemp = new ArrayList<>();
+
+
+
+    HashMap<String, BufferedImage> myMapImg ;
 
 
     private String label = "Arbitrary Label";
     public MySession() {
-    this.arrImg =  new ArrayList<>();
+    this.myMapImg =  new HashMap<>();
         connected = false;
     }
 
@@ -30,17 +41,17 @@ public class MySession  implements Serializable {
         return "MySession{" +
                 "connected=" + connected +
                 ", userName='" + userName + '\'' +
-                ", arrImg=" + arrImg +
+                ", arrImg=" + myMapImg +
                 ", label='" + label + '\'' +
                 '}';
     }
 
-    public ArrayList<ArrayList<BufferedImage>> getArrImg() {
-        return arrImg;
+    public HashMap<String, BufferedImage> getArrImg() {
+        return myMapImg;
     }
 
-    public void setArrImg(ArrayList<ArrayList<BufferedImage>> arrImg) {
-        this.arrImg = arrImg;
+    public void setArrImg(HashMap<String, BufferedImage> arrImg) {
+        this.myMapImg = arrImg;
     }
 
     /**

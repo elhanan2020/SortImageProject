@@ -1,6 +1,7 @@
 package main.controllers;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.validation.Valid;
 
 import main.beans.MySession;
@@ -16,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,35 +73,30 @@ public class UserController {
 
     @GetMapping("/sortImage")
     public String sortImage(Model model ) throws Exception {
-       ComparingImages sortAction = new ComparingImages(sessionObj.getUserName(),sessionObj.getArrImg());
+       ComparingImages sortAction = new ComparingImages(sessionObj.getUserName(),sessionObj.getArrImg(),sessionObj.getArrTemp());
        sortAction.run();
-      model.addAttribute("user", sessionObj.getUserName());
-      sessionObj.setArrImg(sortAction.getArrImg());
-      return "uploadFile";
+       model.addAttribute("user", sessionObj.getUserName());
+       sessionObj.setArrImg(sortAction.getArrImg());
+       return "gallery";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") long id, @Valid User user, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            user.setId(id);
-            return "update-user";
+
+    @PostMapping("/getThePicture")
+    @ResponseBody
+    public void getPictName(@RequestBody  ArrayList<String> arrOfImg) throws IOException {
+    System.out.println(arrOfImg);
+        for (String namePic:arrOfImg) {
+            String[] temp = namePic.split("\\.");
+            File outfile = new File("\\Users\\owner\\myNewFile\\"+namePic.trim());
+            ImageIO.write(sessionObj.getArrImg().get(namePic.trim()),temp[temp.length-1] , outfile);
         }
-
-        getRepo().save(user);
-        model.addAttribute("users", getRepo().findAll());
-        return "index";
     }
+
 
     @GetMapping("/getListImg")
-    public @ResponseBody List<HashMap<Integer, Integer>> getListImg( ) {
-        ArrayList<ArrayList<BufferedImage>> temp = sessionObj.getArrImg();
-        List<HashMap<Integer, Integer>> myList = new ArrayList<>();
-        for (int i = 0 ; i< temp.size() ; i++) {
-            HashMap<Integer, Integer> map = new HashMap<>();
-            map.put(i,temp.get(i).size());
-            myList.add(map);
-        }
-        return myList;
+    public @ResponseBody ArrayList<ArrayList<String>> getListImg( ) {
+
+        return sessionObj.getArrTemp();
     }
 
     @GetMapping(value="/json")
