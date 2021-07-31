@@ -34,13 +34,13 @@ public class DefaultFileStorageService implements FileStorageService {
     UploadFileProperties uploadFileProperties;
 
     @Override
-    public FileMetaData store(MultipartFile file) throws FileStorageException {
+    public FileMetaData store(MultipartFile file, String dirFile) throws FileStorageException {
 
         //Normalize the path by suppressing sequences like "path/.." and inner simple dots.
         String[] fileName = StringUtils.cleanPath(file.getOriginalFilename()).split("/");
         try {
             // we can add additional file validation to discard invalid files
-            Path uploadDir = getUploadDirLocation().resolve(fileName[1]);
+            Path uploadDir = getUploadDirLocation().resolve(dirFile).resolve(fileName[1]);
 
             //copy the file to the upload directory,it will replace any file with same name.
             Files.copy(file.getInputStream(), uploadDir, StandardCopyOption.REPLACE_EXISTING);

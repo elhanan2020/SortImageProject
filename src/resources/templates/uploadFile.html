@@ -1,36 +1,149 @@
+<!--
+
+-->
+<!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/logo.png">
     <title>Sorting Images</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/dropZone.js"></script>
+    <script src="/static/js/popper.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/waiting.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Exo+2:400,700,500,300);
+        body {
+            background: #ebeff2;
+            font-family: "Exo 2",sans-serif;
+        }
+        .zone {
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: radial-gradient(ellipse at center, #4762bc 0, #c9402f 100%);
+            width: 80%;
+            height: 50%;
+            border: 5px dashed white;
+            text-align: center;
+            color: white;
+            z-index: 20;
+            transition: all 0.3s ease-out;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 0 0.25em 0 rgba(0, 0, 0, 0.25);
+        }
+        .zone .btnCompression .active {
+            background: #4762bc;
+            color: white;
+        }
+        .zone .i {
+            text-align: center;
+            font-size: 10em;
+            color: #fff;
+            margin-top: 50px;
+        }
+        .zone .selectFile {
+            height: 50px;
+            margin: 20px auto;
+            position: relative;
+            width: 300px;
+        }
+        .zone label, .zone input {
+            cursor: pointer;
+            display: block;
+            height: 50px;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            border-radius: 5px;
+        }
+        .zone label {
+            background: #fff;
+            color: #4762bc;
+            display: inline-block;
+            font-size: 1.2em;
+            line-height: 50px;
+            padding: 0;
+            text-align: center;
+            white-space: nowrap;
+            text-transform: uppercase;
+            font-weight: 400;
+            box-shadow: 0 1px 1px gray;
+        }
+        .zone input[type=file] {
+            opacity: 0;
+        }
+        .zone.in {
+            color: white;
+            border-color: white;
+            background: radial-gradient(ellipse at center, #4762bc 0, #4762bc 100%);
+        }
+        .zone.in i {
+            color: #fff;
+        }
+        .zone.in label {
+            background: #fff;
+            color: #4762bc;
+        }
+        .zone.hover {
+            color: gray;
+            border-color: white;
+            background: #fff;
+            border: 5px dashed gray;
+        }
+        .zone.hover i {
+            color: #4762bc;
+        }
+        .zone.hover label {
+            background: #fff;
+            color: #4762bc;
+        }
+        .zone.fade {
+            transition: all 0.3s ease-out;
+            opacity: 1;
+        }
 
+    </style>
 </head>
-<body>
 
-    <h2> Uploaded New File </h2>
-    <form method="POST" enctype="multipart/form-data" action="/upload-file">
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Upload</span>
+<body class="img js-fullheight" style="background-image: url(/static/images/bg.jpg);">
+<header th:insert="fragments/Navbar.html:: header"></header>
+
+<form id="myForm" method="POST" enctype="multipart/form-data" action="/upload-file" onchange="submit()">
+
+    <div class="zone">
+        <div id="dropZ">
+            <i  style="font-size:200px " class="fas fa-cloud-upload-alt"></i>
+            <div>Drag and drop your file here</div>
+            <span>OR</span>
+            <div class="selectFile">
+                <label for="file">Select file</label>
+                <input type="file" name="files[]" id="file"  multiple="" directory="" webkitdirectory="" mozdirectory="" >
             </div>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="inputGroupFile01">
-                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-            </div>
-            <input type="file" name="files[]" id="files" multiple="" directory="" webkitdirectory="" mozdirectory="">
-            <input class="button" type="submit" value="Upload" />
-
-
-
+            <p>File size limit : 10 MB</p>
         </div>
-    </form>
 
-
-    <a href="/sortImage" class="btn btn-secondary">to sort your image</a>
-    <img id="documentHolder" alt="Image view placeholder" src="/" />
-
-</div>
+    </div>
+</form>
+<script>
+    function submit() {
+        let myForm = document.getElementById("myForm");
+        myForm.submit();
+    }
+</script>
 </body>
 </html>

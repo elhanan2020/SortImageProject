@@ -1,6 +1,5 @@
 package main.img;
 
-import main.beans.MySession;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -12,8 +11,10 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class ComparingImages extends Thread {
+    private final boolean[] finish;
     private final String directoryPath;
     private final ArrayList<ArrayList<String>> arrTemp  ;
+    private final String action  ;
     private  HashMap<String, BufferedImage> myMap;
 
 
@@ -26,30 +27,41 @@ public class ComparingImages extends Thread {
     }
 
 
-    public ComparingImages(String username , HashMap<String, BufferedImage> session,ArrayList<ArrayList<String>> arrTemp) {
+    public ComparingImages(String username , HashMap<String, BufferedImage> session,ArrayList<ArrayList<String>> arrTemp,boolean[] finish,String action) {
         this.arrTemp = arrTemp;
         this.myMap = session;
-        this.directoryPath = new String("\\Users\\owner\\myNewFile\\");
-
+        this.directoryPath = new String("\\Users\\owner\\myNewFile\\" + username+"\\");
+        this.action = action;
+        this.finish = finish;
     }
 
 
 
     public void run() {
+        finish[0]= false;
         try {
-            compareImg();
-            checkArr();
+            switch (action) {
+                case "SortingAndFiltering" :
+                    compareImg();
+                    checkArr();
+                case "SORTING":
+                    compareImg();
+                case "FILTERING":
+                    compareAndRemoveImg();
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+        finish[0] = true;
     }
 
 
 
     public void compareImg() throws Exception {
         ArrayList<String> cont = new ArrayList<>(Arrays.asList(Objects.requireNonNull(new File (directoryPath).list())));
+        ArrayList<Integer> toClear = new ArrayList<>();
         boolean on;
-       ArrayList<Integer> toClear = new ArrayList<>();
         if(cont.isEmpty())
             return;
         for (int img = 0; img < cont.size(); img++) {
@@ -63,7 +75,7 @@ public class ComparingImages extends Thread {
                         on = true;
                         myMap.put(cont.get(imge),ImageIO.read(new File(directoryPath + cont.get(imge))));
                         Temp.add(cont.get(imge));
-                        Files.delete(Paths.get("C:\\Users\\owner\\myNewFile\\" + cont.get(imge)));
+                        Files.delete(Paths.get(directoryPath + cont.get(imge)));
                         cont.remove(imge);
                     }
             }
@@ -75,8 +87,25 @@ public class ComparingImages extends Thread {
             }
         }
         for (int i = toClear.size() - 1; i >= 0; i--){
-            Files.delete(Paths.get("C:\\Users\\owner\\myNewFile\\" + cont.get(toClear.get(i))));
+            Files.delete(Paths.get(directoryPath + cont.get(toClear.get(i))));
             cont.remove(toClear.get(i));
+        }
+    }
+    public void compareAndRemoveImg() throws Exception {
+        ArrayList<String> cont = new ArrayList<>(Arrays.asList(Objects.requireNonNull(new File (directoryPath).list())));
+        if(cont.isEmpty())
+            return;
+        for (int img = 0; img < cont.size(); img++) {
+            BufferedImage img1 = ImageIO.read(new File(directoryPath + cont.get(img)));
+            for (int imge = img + 1; imge < cont.size(); imge++) {
+                BufferedImage img2 = ImageIO.read(new File(directoryPath + cont.get(imge)));
+                    double percentage = checkImg(img1,img2);
+                    if(percentage == 0.0 ){
+                        Files.delete(Paths.get(directoryPath + cont.get(imge)));
+                        cont.remove(imge);
+                        imge--;
+                    }
+            }
         }
     }
 
@@ -132,7 +161,7 @@ public class ComparingImages extends Thread {
         }
         for (int i = 0;i< arrTemp.size();i++) {
             if (arrTemp.get(i).size()==1){
-                File outfile = new File("\\Users\\owner\\myNewFile\\" + arrTemp.get(i).get(0));
+                File outfile = new File(directoryPath + arrTemp.get(i).get(0));
                 ImageIO.write(myMap.get(arrTemp.get(i).get(0)),arrTemp.get(i).get(0).split("\\.")[1],outfile);
                 myMap.remove(arrTemp.get(i).get(0));
                 arrTemp.remove(i);

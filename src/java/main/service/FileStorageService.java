@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface FileStorageService {
 
-    FileMetaData store(MultipartFile file) throws FileStorageException;
+    FileMetaData store(MultipartFile file ,String dirFile) throws FileStorageException;
     List<Path> getAllFiles();
     FileMetaData getFile(String fileName) throws FileNotFoundException;
 }

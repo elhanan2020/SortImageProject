@@ -16,6 +16,11 @@ public class MySession  implements Serializable {
     private boolean connected ;
     private String userName="";
 
+    public void setFinish(boolean finish) {
+        this.finish[0] = finish;
+    }
+
+    private boolean[] finish = new boolean[]{true};
     public void setArrTemp(ArrayList<ArrayList<String>> arrTemp) {
         this.arrTemp = arrTemp;
     }
@@ -86,4 +91,13 @@ public class MySession  implements Serializable {
         return this.userName;
     }
 
+    public void reset() {
+        connected = false;
+        userName = "";
+        myMapImg = new HashMap<>();
+    }
+
+    public boolean[] isFinish() {
+        return finish;
+    }
 }

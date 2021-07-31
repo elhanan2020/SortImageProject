@@ -6,62 +6,71 @@
             fetchImg()
     });
 
-    function fetchImg() {
-    fetch("getListImg", {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8",
-        },
-    })
-        .then(res => res.json())
-        .then(resp => {
-            if (resp.length === 0) {
-            }
-            else {
-                let imgRow =  "";
-                for (let item of resp) {
-                    imgRow += "<div class=\"row\" >";
-                    for (let item2 of item) {
-                        console.log(item2);
-                       imgRow += "<input type=\"checkbox\" name=\" "+item2 + "\" value=\"" +item2+ "\">\n" +
-                                 "<label for=\"vehicle1\">" +
-                                 "<div class=\"column\">\n" +
-                                 "   <img src=\"get-image/"+ item2 +" \" alt=\"Lights\" style=\"width:100%\"\n" +
-                                 "   data-name = \""+ item2+ "\"  >\n" +
-                                 " </div>"+
-                                 "</label><br>" ;
-                    }
-                    imgRow +="</div>"
+    function buildGallery(resp) {
+        if (resp.length === 0) {
+        }
+        else {
+            let imgRow =  "";
+            for (let item of resp) {
+                console.log(item);
+                imgRow += "<div class=\"row\" >";
+                for (let item2 of item) {
+                    console.log(item2);
+                    imgRow +=   "<div class=\"column\">\n" +
+                        "        <label>\n" +
+                        "            <input type=checkbox name=\""+item2+"\" value=\"\">\n" +
+                        "        </label>\n" +
+                        "        <img src=\"/get-image/"+item2 +"\" alt=\"Lights\" style=\"width:100%\" data-name=\"\">\n" +
+                        "    </div>"
                 }
-                document.getElementById("enterImg").innerHTML = imgRow;
+                imgRow +="</div>"
             }
+            document.getElementById("enterImg").innerHTML = imgRow;
+        }
+    }
+
+    function fetchImg() {
+        document.getElementById("animated-header").style.display = "block";
+        document.getElementById("choice").style.display = "none";
+        fetch("getListImg", {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
         })
-        .catch(e => {
-            document.getElementById("showParticipants").innerHTML = "Some error occured!";
-        });
-              /*  setTimeout(fetchImg, 10000);*/
-            }
-function saveYourChoice() {
-        document.querySelectorAll('[type=checkbox]').forEach(item =>{
-            if(item.checked) {
-                listToReturn[index] = item.name;
-                index++
-            }
-            console.log(listToReturn);
-            content = {
-                method: "post",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(listToReturn),
-            };
-            fetch('/sendThePicture', content)
-                .then( ()=> {
-                    console.log("all is ok");
-                }).catch(function (error) {
-                console.log(error);
+            .then(res => res.json())
+            .then(resp => {
+                document.getElementById("animated-header").style.display = "none";
+                document.getElementById("choice").style.display = "block";
+                buildGallery(resp);
+
+
+            })
+            .catch(e => {
+                document.getElementById("showParticipants").innerHTML = "Some error occured!";
             });
-        })
+                }
+    function saveYourChoice() {
+            document.querySelectorAll('[type=checkbox]').forEach(item =>{
+                if(item.checked) {
+                    listToReturn[index] = item.name;
+                    index++
+                }
+                console.log(listToReturn);
+                content = {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(listToReturn),
+                };
+                fetch('/sendThePicture', content)
+                    .then( ()=> {
+                        console.log("all is ok");
+                    }).catch(function (error) {
+                    console.log(error);
+                });
+            })
     }
 
 })();

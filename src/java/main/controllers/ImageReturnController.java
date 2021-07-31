@@ -31,6 +31,15 @@ public class ImageReturnController {
         baos.flush();
         return baos.toByteArray();
     }
+    @GetMapping(value ="/getAllImage/{imgNum1}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public @ResponseBody byte[] getAllImage(@PathVariable("imgNum1") String imgNum ) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        BufferedImage thumbnail = Scalr.resize(ImageIO.read(new File("\\Users\\owner\\myNewFile\\" + sessionObj.getUserName() +"\\" + imgNum)),  Scalr.Method.SPEED, Scalr.Mode.FIT_TO_WIDTH,
+                600, 400, Scalr.OP_ANTIALIAS);
+        ImageIO.write(thumbnail, "JPEG", baos);
+        baos.flush();
+        return baos.toByteArray();
+    }
 
    /* @GetMapping(value = "/get-image-with-media-type", produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getImageWithMediaType() throws IOException {

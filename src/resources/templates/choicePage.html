@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/static/showingImg.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial;
+        }
+
+        /* The grid: Four equal columns that floats next to each other */
+        .column {
+            float: left;
+            width: 25%;
+            padding: 10px;
+        }
+
+        /* Style the images inside the grid */
+        .column img {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+        .column img:hover {
+            opacity: 1;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* The expanding image container */
+        .container {
+            position: relative;
+            display: none;
+        }
+
+        /* Expanding image text */
+        #imgtext {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            color: white;
+            font-size: 20px;
+        }
+
+        /* Closable button inside the expanded image */
+        .closebtn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: white;
+            font-size: 35px;
+            cursor: pointer;
+        }
+    </style>
+    <title>Users</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/gallery.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/gallery.js"></script>
+    <script src="/static/css/gallery.css"></script>
+    <script src="/static/choice.js"></script>
+</head>
+
+<body class="img js-fullheight" style="background-image: url(/static/images/bg.jpg);">
+
+
+    <header th:insert="fragments/Navbar.html:: header"></header>
+
+    <div style="text-align:center">
+        <h2 class="alert alert-primary">Please choice the pictures that you want to save</h2>
+    </div>
+
+    <button class="btn btn-secondary" onClick="saveYourChoice(this)">press here to save</button>
+    <div id="enterImg">
+
+    </div>
+
+<script>
+    function saveYourChoice() {
+        let content = {};
+        let listToReturn = [];
+        let index = 0;
+        document.querySelectorAll('[type=checkbox]').forEach(item => {
+            if (item.checked) {
+                listToReturn[index] = item.name;
+                index++
+            }
+            console.log(listToReturn);
+            content = {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(listToReturn),
+            };
+        })
+        fetch('/getAllThePicture', content)
+            .then(() => {
+                console.log("all is ok");
+            }).catch(function(error) {
+            console.log(error);
+        });
+        window.location.assign("/");
+    }
+</script>
+
+</body></html>
