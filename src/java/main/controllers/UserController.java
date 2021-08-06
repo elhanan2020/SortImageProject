@@ -64,6 +64,7 @@ public class UserController {
         else
             System.out.println("Folder already exists.");
         sessionObj.setUserName("elhanan");
+
         model.addAttribute("connect",sessionObj.getConnected());
         model.addAttribute("toDownload", false);
         return "uploadFile";
