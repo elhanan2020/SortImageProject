@@ -100,9 +100,11 @@
 </div>
 
 <button class="btn btn-secondary" onClick="saveYourChoice(this)">press here to save</button>
-<div id="enterImg">
+    <div class="grid-rows">
+        <div id="enterImg" class="grid-col">
 
-</div>
+        </div>
+    </div>
 </div>
 <script>
     function saveYourChoice() {
@@ -125,11 +127,10 @@
         })
         fetch('/getThePicture', content)
             .then(() => {
-                console.log("all is ok");
             }).catch(function(error) {
             console.log(error);
         });
-        window.location.assign("/");
+        window.location.assign("/download");
     }
 </script>
 

@@ -27,10 +27,10 @@ public class ComparingImages extends Thread {
     }
 
 
-    public ComparingImages(String username , HashMap<String, BufferedImage> session,ArrayList<ArrayList<String>> arrTemp,boolean[] finish,String action) {
+    public ComparingImages(String path,String username , HashMap<String, BufferedImage> session,ArrayList<ArrayList<String>> arrTemp,boolean[] finish,String action) {
         this.arrTemp = arrTemp;
         this.myMap = session;
-        this.directoryPath = new String("\\Users\\owner\\myNewFile\\" + username+"\\");
+        this.directoryPath = new String(path+"\\" + username+"\\");
         this.action = action;
         this.finish = finish;
     }
@@ -169,4 +169,5 @@ public class ComparingImages extends Thread {
             }
         }
     }
+
 }

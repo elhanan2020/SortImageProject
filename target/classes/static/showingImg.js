@@ -12,18 +12,14 @@
         else {
             let imgRow =  "";
             for (let item of resp) {
-                console.log(item);
-                imgRow += "<div class=\"row\" >";
                 for (let item2 of item) {
-                    console.log(item2);
-                    imgRow +=   "<div class=\"column\">\n" +
+                    imgRow +=   "<div>\n" +
                         "        <label>\n" +
-                        "            <input type=checkbox name=\""+item2+"\" value=\"\">\n" +
+                        "        <input type=checkbox name=\""+item2+"\" value=\"\">\n" +
                         "        </label>\n" +
-                        "        <img src=\"/get-image/"+item2 +"\" alt=\"Lights\" style=\"width:100%\" data-name=\"\">\n" +
-                        "    </div>"
+                        "        <img src=\"/get-image/"+item2 +"\" alt=\"Lights\" style=\"width:100%\" data-name=\"\">\n"
+                    + "</div>\n";
                 }
-                imgRow +="</div>"
             }
             document.getElementById("enterImg").innerHTML = imgRow;
         }

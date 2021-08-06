@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/download.css">
     <link rel="stylesheet" href="/static/scss/animation.css">
     <link rel="stylesheet" href="/static/scss/uploadFiles.scss">
 
@@ -20,27 +21,26 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 
-<body class="img js-fullheight" style="background-image: url(/static/images/bg.jpg);">
-<header th:insert="fragments/Navbar.html:: header"></header>
+        <body class="img js-fullheight" style="background-image: url(/static/images/bg.jpg);">
+        <header th:insert="fragments/Navbar.html:: header"></header>
 
-<div class="container-fluid " id="buttonAction" style="display: block">
-    <div style="text-align:center ; opacity: 0.5">
-        <h2 class="alert alert-primary">Welcome <span></span> to the web sort pictures site </h2>
+        <div class="container-fluid " id="buttonAction" style="display: block">
+            <div style="text-align:center ; opacity: 0.5">
+                <h2 class="alert alert-primary">Welcome to the web sort pictures site </h2>
+            </div>
 
-    </div>
-
-    <div class="row" >
+    <div class="row" style="margin:150px auto" >
         <div class="col-md-3" style="margin:0 auto">
-            <a  href="/sortImageAndFiltering" class="btn btn-secondary">Sorting and filtering images</a>
+            <a style="text-decoration: none;"  class="mybutton" href="/sortImageAndFiltering" >Sorting and filtering images </a>
         </div>
         <div class="col-md-3" style="margin:0 auto">
-            <a  href="/Filtering" class="btn btn-secondary">Filtering images</a>
+            <a style="text-decoration: none;"  class="mybutton" href="/Filtering" >Filtering images</a>
         </div>
         <div class="col-md-3" style="margin:0 auto">
-            <a  href="/Sorting" class="btn btn-secondary">Sorting images</a>
+            <a style="text-decoration: none;"  class="mybutton" href="/Sorting" >Sorting images</a>
         </div>
-        <div class="col-md-3" style="margin:0 auto ; display: inline-flex" >
-            <a  href="/Self-choice" class="btn btn-secondary">Self-choice</a>
+        <div class="col-md-3" style="margin:0 auto" >
+            <a style="text-decoration: none;"  class="mybutton" href="/Self-choice" >Self-choice</a>
         </div>
 
     </div>

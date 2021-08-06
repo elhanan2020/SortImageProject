@@ -37,7 +37,8 @@
                         </div>
                         <div class="form-group">
                             <input id="password-field" name="password" type="password" class="form-control" placeholder="Password" required>
-                            <span th:if="${error}"  class="text-danger">it"s a wrong password</span>
+                            <span th:if="${error1}"  class="text-danger ">This user doesn't exist </span>
+                            <span th:if="${error2}"  class="text-danger ">It"s a wrong password</span>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>

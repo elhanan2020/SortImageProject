@@ -26,7 +26,7 @@
         @import url(https://fonts.googleapis.com/css?family=Exo+2:400,700,500,300);
         body {
             background: #ebeff2;
-            font-family: "Exo 2",sans-serif;
+            font-family: "Exo 2";
         }
         .zone {
             margin: auto;
@@ -35,7 +35,7 @@
             left: 0;
             bottom: 0;
             right: 0;
-            background: radial-gradient(ellipse at center, #4762bc 0, #c9402f 100%);
+            background: radial-gradient(ellipse at center, transparent 0, transparent 100%);
             width: 80%;
             height: 50%;
             border: 5px dashed white;
@@ -46,13 +46,13 @@
             box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 0 0.25em 0 rgba(0, 0, 0, 0.25);
         }
         .zone .btnCompression .active {
-            background: #4762bc;
+            background: transparent;
             color: white;
         }
         .zone .i {
             text-align: center;
             font-size: 10em;
-            color: #fff;
+            color: #e25a5a;
             margin-top: 50px;
         }
         .zone .selectFile {
@@ -72,8 +72,8 @@
             border-radius: 5px;
         }
         .zone label {
-            background: #fff;
-            color: #4762bc;
+            background: #e25a5a;
+            color: transparent;
             display: inline-block;
             font-size: 1.2em;
             line-height: 50px;
@@ -90,14 +90,14 @@
         .zone.in {
             color: white;
             border-color: white;
-            background: radial-gradient(ellipse at center, #4762bc 0, #4762bc 100%);
+            background: radial-gradient(ellipse at center, transparent 0, transparent 100%);
         }
         .zone.in i {
             color: #fff;
         }
         .zone.in label {
             background: #fff;
-            color: #4762bc;
+            color: transparent;
         }
         .zone.hover {
             color: gray;
@@ -106,16 +106,17 @@
             border: 5px dashed gray;
         }
         .zone.hover i {
-            color: #4762bc;
+            color: transparent;
         }
         .zone.hover label {
             background: #fff;
-            color: #4762bc;
+            color: transparent;
         }
         .zone.fade {
             transition: all 0.3s ease-out;
             opacity: 1;
         }
+
 
     </style>
 </head>
@@ -127,14 +128,13 @@
 
     <div class="zone">
         <div id="dropZ">
-            <i  style="font-size:200px " class="fas fa-cloud-upload-alt"></i>
+            <i  style="font-size:200px ; color: #e25a5a " class="fas fa-cloud-upload-alt"></i>
             <div>Drag and drop your file here</div>
             <span>OR</span>
             <div class="selectFile">
-                <label for="file">Select file</label>
+                <label  style="color  :#fff" for="file">Select file</label>
                 <input type="file" name="files[]" id="file"  multiple="" directory="" webkitdirectory="" mozdirectory="" >
             </div>
-            <p>File size limit : 10 MB</p>
         </div>
 
     </div>

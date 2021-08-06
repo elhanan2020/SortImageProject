@@ -8,15 +8,16 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    <a class="nav-link" href="/gallery">Features</a>
+                    <a  class="nav-link" th:if="${toDownload}" href="/download" >Download</a>
                     <a class="nav-link" href="/about">About </a>
 
                 </div>
 
             </div>
+            <ul class="nav navbar-nav navbar-right alert alert-danger" th:if="${connect}"> Connected   </ul>
             <ul class="nav navbar-nav navbar-right ">
-                <li><a class="nav-link " href="/" id="sign_up"> Log In <span class="fas fa-sign-in-alt"></span></a></li>
-                <li><a class="nav-link " href="/logOut" id="login">log Out <span class="fas fa-sign-out-alt"></span></a></li>
+                <li><a class="nav-link " href="/" id="login"> Log In <span class="fas fa-sign-in-alt"></span></a></li>
+                <li><a class="nav-link " href="/logOut" id="sign_up">log Out <span class="fas fa-sign-out-alt"></span></a></li>
             </ul>
         </div>
     </nav>

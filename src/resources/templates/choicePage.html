@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="/static/showingImg.js"></script>
+    <script src="/static/choice.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -76,7 +76,7 @@
     <script src="/static/js/main.js"></script>
     <script src="/static/js/gallery.js"></script>
     <script src="/static/css/gallery.css"></script>
-    <script src="/static/choice.js"></script>
+
 </head>
 
 <body class="img js-fullheight" style="background-image: url(/static/images/bg.jpg);">
@@ -88,9 +88,11 @@
         <h2 class="alert alert-primary">Please choice the pictures that you want to save</h2>
     </div>
 
-    <button class="btn btn-secondary" onClick="saveYourChoice(this)">press here to save</button>
-    <div id="enterImg">
+    <button class="btn btn-secondary" onClick="saveYourChoice(this)">Press here to save</button>
+    <div class="grid-rows">
+        <div id="enterImg" class="grid-col">
 
+        </div>
     </div>
 
 <script>
@@ -118,7 +120,7 @@
             }).catch(function(error) {
             console.log(error);
         });
-        window.location.assign("/");
+        window.location.assign("/download");
     }
 </script>
 

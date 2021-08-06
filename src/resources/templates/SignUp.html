@@ -22,13 +22,15 @@
                 <h2 class="heading-section">Welcome to our web site</h2>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center  ">
             <div class="col-md-6 col-lg-4">
                 <div class="login-wrap p-0">
                     <h3 class="mb-4 text-center">Don't Have account ?</h3>
                     <form action="/signUp" th:action="@{/signUp}" th:object="${user}" class="signin-form" method="POST" oninput='repassword.setCustomValidity(repassword.value !== password-field.value ? "Passwords do not match." : "")'>
                         <div class="form-group">
                             <input type="text" th:field="*{userName}" class="form-control" placeholder="Username" required>
+                            <span th:if="${error}"  class="text-danger ">This username already  exist </span>
+
                         </div>
                         <div class="form-group">
                             <input id="password-field" th:field="*{password}"  type="password" class="form-control" placeholder="Password" required>

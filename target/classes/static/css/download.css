@@ -1,13 +1,16 @@
 .mybutton {
-    transition: .3s;
+    margin:auto 0 ;
+    margin-top:50% ;
+    transition: 0.3s;
     display: table;
-    background-color: #7f4a4c;
+    background-color: #8d5956;
     color: #fff;
     font-family: 'Alef', sans-serif;
     font-size: 18px;
-    padding: 10px 25px;
+    padding: 20px 60px;
     margin: 40px auto ;
     border-radius: 15px;
+
 }
 
 
