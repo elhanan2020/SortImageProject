@@ -8,19 +8,10 @@
 
     function buildGallery(resp) {
         if (resp.length === 0) {
+            window.location.assign("/download");
         }
         else {
             let imgRow =  "";
-            /*for (let item of resp) {
-                for (let item2 of item) {
-                    imgRow +=   "<div>\n" +
-                        "        <label>\n" +
-                        "        <input type=checkbox name=\""+item2+"\" value=\"\">\n" +
-                        "        </label>\n" +
-                        "        <img src=\"/get-image/"+item2 +"\" alt=\"Lights\" style=\"width:100%\" data-name=\"\">\n"
-                    + "</div>\n";
-                }
-            }*/
             for (let item of resp) {
                 imgRow += "<div class=\"grid-rows\">";
                 imgRow += "<div class=\"grid-col\">\n" ;
