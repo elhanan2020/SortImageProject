@@ -1,3 +1,4 @@
+/*
 $(document).bind('dragover', function (e) {
     console.log("chavouua tov");
     var dropZone = $('.zone'),
@@ -25,4 +26,4 @@ $(document).bind('dragover', function (e) {
         window.dropZoneTimeout = null;
         dropZone.removeClass('in hover');
     }, 100);
-});
+});*/

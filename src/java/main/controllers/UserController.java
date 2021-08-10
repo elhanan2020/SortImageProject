@@ -52,22 +52,14 @@ public class UserController {
 
     @GetMapping("/")
     public String main(User user ,Model model) throws IOException {
-       /* if(sessionObj.getConnected()){
-            model.addAttribute("connect",true);
+        if(sessionObj.getConnected()){
+            model.addAttribute("connect",sessionObj.getConnected());
             model.addAttribute("toDownload" ,sessionObj.getArrImg().size() > 0);
             return "uploadFile";
         }
-        model.addAttribute("connect",false);*/
-        File file = new File("/Users/owner/myNewFile/" +"\\"+ sessionObj.getUserName());
-        if (file.mkdir())
-            System.out.println("Folder is created!");
-        else
-            System.out.println("Folder already exists.");
-        sessionObj.setUserName("elhanan");
-
         model.addAttribute("connect",sessionObj.getConnected());
-        model.addAttribute("toDownload", false);
-        return "uploadFile";
+        model.addAttribute("toDownload", sessionObj.getArrImg().size() > 0);
+        return "LoginPage";
     }
 
     @GetMapping("/download")
@@ -145,7 +137,7 @@ public class UserController {
         Path myPath = Paths.get(uploadFileProperties.getUploadDir()).toAbsolutePath().normalize();
         for (String namePic:arrOfImg) {
             String[] temp = namePic.split("\\.");
-            File outfile = new File(myPath + sessionObj.getUserName() +"\\"+ namePic.trim());
+            File outfile = new File(myPath +"\\"+ sessionObj.getUserName() +"\\"+ namePic.trim());
             ImageIO.write(sessionObj.getArrImg().get(namePic.trim()),temp[temp.length-1] , outfile);
         }
         sessionObj.setArrImg(new HashMap<>());
@@ -158,7 +150,7 @@ public class UserController {
     @ResponseBody
     public String getAllThePicture(@RequestBody  ArrayList<String> arrOfImg,Model model) throws IOException {
         Path myPath = Paths.get(uploadFileProperties.getUploadDir()).toAbsolutePath().normalize();
-        ArrayList<String> cont = new ArrayList<>(Arrays.asList(Objects.requireNonNull(new File ("\\Users\\owner\\myNewFile\\" + sessionObj.getUserName()).list())));
+        ArrayList<String> cont = new ArrayList<>(Arrays.asList(Objects.requireNonNull(new File (myPath +"\\" + sessionObj.getUserName()).list())));
         for (String imageName:cont) {
             if(!arrOfImg.contains(imageName))
                 Files.delete(Paths.get(myPath + "\\" + sessionObj.getUserName() + "\\"+imageName ));

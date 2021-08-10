@@ -33,13 +33,17 @@
 </div>
 <div  id="download_button" class="container-fluid">
     <div class="col-md-4"  style="margin: 150px auto 0;">
-        <a style="text-decoration: none;"  class="mybutton" href="/myPhotos.zip" download>
+        <a style="text-decoration: none;" onclick="toTheMainPage()" class="mybutton" href="/myPhotos.zip" download>
             <i  style="display: inline-block" class="fa fa-download " > </i> Download
         </a>
 
     </div>
 </div>
-
+<script>
+    function toTheMainPage() {
+        window.location.assign("/");
+    }
+</script>
 
 </body>
 

@@ -13,7 +13,7 @@
                     "        <label>\n" +
                     "        <input type=checkbox name=\""+item+"\" value=\"\">\n" +
                     "        </label>\n" +
-                    "        <img src=\"/getAllImage/"+item +"\" alt=\"Lights\" style=\"width:100%\" data-name=\"\">\n"
+                    "        <img src=\"/getAllImage/"+item +"\" alt=\"Img\" style=\"width:100%\" data-name=\"\">\n"
                     + "</div>\n";
             }
             document.getElementById("enterImg").innerHTML = imgRow;
