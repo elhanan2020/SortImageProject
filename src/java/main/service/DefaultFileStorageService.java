@@ -35,7 +35,6 @@ public class DefaultFileStorageService implements FileStorageService {
 
     @Override
     public FileMetaData store(MultipartFile file, String dirFile) throws FileStorageException {
-        System.out.println(getUploadDirLocation());
         //Normalize the path by suppressing sequences like "path/.." and inner simple dots.
         String[] fileName = StringUtils.cleanPath(file.getOriginalFilename()).split("/");
         try {
